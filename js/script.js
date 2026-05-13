@@ -11,34 +11,44 @@ const qsa = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
 /* ── Page Transition Overlay ─────────────────────────────── */
 function initPageTransition() {
-    // Inject overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'page-transition';
-    document.body.prepend(overlay);
+    const overlay = qs('.page-transition');
+    if (!overlay) return;
 
-    // Remove after animation
-    overlay.addEventListener('animationend', () => overlay.remove());
+    // Reveal page on load
+    overlay.style.transform = 'scaleY(0)';
+    overlay.style.transformOrigin = 'top';
+
+    // Handle Back/Forward Cache
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+            overlay.style.transition = 'none';
+            overlay.style.transform = 'scaleY(0)';
+            setTimeout(() => {
+                overlay.style.transition = '';
+            }, 10);
+        }
+    });
 
     // Intercept internal links for smooth exit
     qsa('a[href]').forEach(link => {
         const href = link.getAttribute('href');
         if (!href || href.startsWith('#') || href.startsWith('mailto:') ||
             href.startsWith('tel:') || href.startsWith('http') ||
-            link.target === '_blank') return;
+            link.target === '_blank' || link.classList.contains('no-transition')) return;
 
         link.addEventListener('click', e => {
+            const currentPath = window.location.pathname;
+            const targetPath = new URL(link.href).pathname;
+            
+            if (currentPath === targetPath) return;
+
             e.preventDefault();
-            const exitOverlay = document.createElement('div');
-            exitOverlay.style.cssText = `
-                position:fixed;inset:0;background:var(--primary-dark);
-                z-index:99990;transform-origin:bottom;transform:scaleY(0);
-                transition:transform 0.5s cubic-bezier(0.77,0,0.175,1);
-            `;
-            document.body.appendChild(exitOverlay);
-            requestAnimationFrame(() => {
-                exitOverlay.style.transform = 'scaleY(1)';
-            });
-            setTimeout(() => { window.location.href = href; }, 520);
+            overlay.style.transformOrigin = 'bottom';
+            overlay.style.transform = 'scaleY(1)';
+            
+            setTimeout(() => { 
+                window.location.href = href; 
+            }, 550);
         });
     });
 }
@@ -391,19 +401,51 @@ function initContactForm() {
         btn.disabled = true;
         btn.style.opacity = '0.8';
 
-        await new Promise(r => setTimeout(r, 1800));
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz1jtgYnDpxouNgdDz8KXqzkE-ynn_9JrlLwZBlSGBnCFo8klSVeoba5J8_yRaxoKj9xA/exec';
+        
+        try {
+            const formData = new FormData(form);
+            const submitData = new URLSearchParams();
+            
+            submitData.append('name', formData.get('name') || '');
+            submitData.append('email', formData.get('email') || '');
+            submitData.append('phone', formData.get('phone') || '');
+            submitData.append('message', formData.get('message') || '');
+            
+            // Collect all selected checkboxes
+            const services = formData.getAll('service');
+            submitData.append('services', services.join(', '));
 
-        btn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Message Sent!`;
-        btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
-        btn.style.opacity = '1';
+            await fetch(scriptURL, {
+                method: 'POST',
+                body: submitData,
+                mode: 'no-cors'
+            });
 
-        setTimeout(() => {
-            btn.innerHTML = original;
-            btn.disabled = false;
-            btn.style.background = '';
-            btn.style.opacity = '';
-            form.reset();
-        }, 3000);
+            btn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Message Sent!`;
+            btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+            btn.style.opacity = '1';
+
+            setTimeout(() => {
+                btn.innerHTML = original;
+                btn.disabled = false;
+                btn.style.background = '';
+                btn.style.opacity = '';
+                form.reset();
+            }, 3000);
+            
+        } catch (error) {
+            console.error('Error!', error.message);
+            btn.innerHTML = 'Error! Try Again.';
+            btn.style.background = '#ef4444';
+            
+            setTimeout(() => {
+                btn.innerHTML = original;
+                btn.disabled = false;
+                btn.style.background = '';
+                btn.style.opacity = '';
+            }, 3000);
+        }
     });
 }
 
@@ -579,6 +621,62 @@ function initSectionTagHover() {
     });
 }
 
+/* ── Testimonial Modal ─────────────────────────────────────── */
+function initTestimonialModal() {
+    const modal = document.getElementById('testimonialModal');
+    if (!modal) return;
+    
+    const closeBtn = modal.querySelector('.close-modal');
+    const quoteText = modal.querySelector('.modal-quote-text');
+    const authorName = document.getElementById('modalAuthorName');
+    const authorTitle = document.getElementById('modalAuthorTitle');
+    const avatar = document.getElementById('modalAvatar');
+    
+    const readMoreBtns = document.querySelectorAll('.read-more-btn');
+    
+    readMoreBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const card = e.target.closest('.testimonial-card');
+            if (!card) return;
+            
+            // Extract data
+            const blockquote = card.querySelector('blockquote').innerHTML;
+            const name = card.querySelector('.author-info h4').textContent;
+            const title = card.querySelector('.author-info p').textContent;
+            const avatarHtml = card.querySelector('.author-avatar').innerHTML;
+            
+            // Populate modal
+            quoteText.innerHTML = blockquote;
+            authorName.textContent = name;
+            authorTitle.textContent = title;
+            avatar.innerHTML = avatarHtml;
+            
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+    });
+    
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    closeBtn.addEventListener('click', closeModal);
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+}
+
 /* ── Main Init ───────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
     initPageTransition();
@@ -598,6 +696,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initActiveNav();
     initSectionTagHover();
     initStatsReveal();
+    initTestimonialModal();
 
     // Deferred (non-blocking)
     requestIdleCallback(() => {

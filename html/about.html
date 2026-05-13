@@ -21,6 +21,8 @@
 </head>
 
 <body>
+    <div class="page-transition"></div>
+
     <!-- Header -->
     <header id="header">
         <div class="container">
@@ -33,6 +35,7 @@
                     <li><a href="../index.html">Home</a></li>
                     <li><a href="about.html" class="active">About Us</a></li>
                     <li><a href="services.html">Services</a></li>
+                    <li><a href="downloads.html">Downloads</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
 
@@ -62,26 +65,24 @@
     <section class="services" style="background: var(--white);">
         <div class="container">
             <div class="hero-content">
-                <div style="flex: 1;">
+                <div class="about-text-content">
                     <span class="section-tag" style="margin-bottom: 20px;">Who We Are</span>
-                    <h2
-                        style="font-family: var(--font-heading); font-size: 2.5rem; color: var(--text-dark); margin-bottom: 20px;">
-                        Experts in Share Dematerialization Services</h2>
-                    <p style="color: var(--dark-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
+                    <h2 class="section-title-large">Experts in Share Dematerialization Services</h2>
+                    <p class="about-p-main">
                         Robust Investments Advisory Private Limited (RIAPL) is a premier consultancy and advisory firm
                         specializing in comprehensive solutions for old and physical shares. With a strong foundation
                         built on industry expertise, transparency, and client satisfaction, we have emerged as trusted
                         advisors for individuals, families, and organizations navigating the complexities of physical
                         securities.
                     </p>
-                    <p style="color: var(--dark-gray); font-size: 1.1rem; line-height: 1.8;">
+                    <p class="about-p-main">
                         Our in-house team comprises seasoned professionals including Company Secretaries, Chartered
                         Accountants, Advocates, and MBAs—bringing together legal, financial, and regulatory excellence
                         under one roof. This multidisciplinary approach enables us to deliver seamless, end-to-end
                         solutions that are both efficient and compliant with current regulations.
                     </p>
                 </div>
-                <div class="mission-vision-wrapper" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+                <div class="mission-vision-wrapper">
                     <!-- Vision Card -->
                     <div
                         style="background: var(--hero-gradient); padding: 30px; border-radius: 16px; color: var(--white); box-shadow: var(--shadow-md); position: relative; overflow: hidden;">
@@ -269,11 +270,7 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>IEPF stands for Investor Education and Protection Fund. If shares or dividends remain
-                            unclaimed
-                            for seven consecutive years, they are transferred to the IEPF. RIAPL specializes in the
-                            complex
-                            legal process of reclaiming these assets for the rightful owners.</p>
+                        <p>IEPF stands for Investor Education and Protection Fund. If shares or dividends remain unclaimed for seven consecutive years, they are transferred to the IEPF. RIAPL specializes in the complex legal process of reclaiming these assets for the rightful owners.</p>
                     </div>
                 </div>
 
@@ -285,40 +282,42 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>The timeline varies depending on the company's Registrar and Transfer Agent (RTA) and the
-                            completeness of documentation. Typically, it takes anywhere from 4 to 8 weeks. Our team
-                            audits
-                            your documents upfront to minimize delays.</p>
+                        <p>The timeline varies depending on the company's Registrar and Transfer Agent (RTA) and the completeness of documentation. Typically, it takes anywhere from 6 months to 2 years. Our team audits your documents upfront to minimize delays.</p>
                     </div>
                 </div>
-
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>What documents are required for share transmission?</span>
+                        <span>Why Should I Convert My Physical Shares Into A Demat Account?</span>
                         <svg viewBox="0 0 24 24">
                             <path d="M12 5v14M5 12h14" />
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Share transmission (in case of death) requires documents such as the original share
-                            certificates,
-                            notarized copy of the death certificate, succession certificate (or probate/will), and KYC
-                            documents of the legal heirs. We provide a tailored checklist for your specific case.</p>
+                        <p>SEBI has made it mandatory to hold shares in demat form for smooth trading, transfer, and security from loss or damage.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>Can you help with shares if I've lost the original certificate?</span>
+                        <span>What Is Dematerialisation Of Shares?</span>
                         <svg viewBox="0 0 24 24">
                             <path d="M12 5v14M5 12h14" />
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Yes, we specialize in obtaining duplicate share certificates. The process involves filing an
-                            FIR,
-                            issuing a public advertisement, and coordinating with the RTA and the company to issue new
-                            certificates before they can be dematerialized.</p>
+                        <p>Dematerialisation is the process of converting physical share certificates into electronic form, which can be held in a demat account.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I Sell Or Transfer My Physical Shares?</span>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 5v14M5 12h14" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No, as per SEBI rules, you must first convert your physical shares into demat form to sell or transfer them.</p>
                     </div>
                 </div>
             </div>
@@ -339,7 +338,7 @@
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="services.html">Our Services</a></li>
-                        <li><a href="services.html#process">How It Works</a></li>
+                        <li><a href="downloads.html">Downloads</a></li>
                         <li><a href="about.html">Why Choose Us</a></li>
                         <li><a href="../index.html#testimonials">Testimonials</a></li>
                         <li><a href="about.html">About Us</a></li>
@@ -382,9 +381,8 @@
                         <span><a href="mailto:info@riapl.com" style="color: inherit; text-decoration: none;">info@riapl.com</a></span>
                     </div>
                     <div class="contact-item">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.445 0 .01 5.437.01 12.045c0 2.112.553 4.177 1.535 5.814L0 23.327l5.421-1.547c1.558.832 3.32 1.272 5.109 1.272l.005.001c6.604 0 12.039-5.436 12.043-12.044a11.9 11.9 0 00-3.468-8.498" />
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.284l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.187-2.59-5.768-5.764-5.768zm3.393 8.243c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.941-.708-1.797 0-.855.448-1.274.607-1.446.159-.171.347-.214.462-.214.116 0 .231.001.332.006.106.005.249-.04.39.298.145.347.491 1.2.535 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289-.087.101-.183.226-.26.303-.087.087-.177.183-.076.357.101.174.45 1.05.965 1.507.514.456 1.139.696 1.312.781.174.085.275.056.377-.043.101-.101.433-.506.549-.68.116-.174.231-.145.39-.087.159.058 1.012.477 1.185.564.174.087.29.13.332.202.043.072.043.405-.101.811z" />
                         </svg>
                         <span><a href="https://wa.me/919825060495" target="_blank" style="color: inherit; text-decoration: none;">WhatsApp Us</a></span>
                     </div>
